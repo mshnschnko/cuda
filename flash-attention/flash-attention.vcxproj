@@ -78,6 +78,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <CudaCompile Include="gpu_attention.cu" />
+    <CudaCompile Include="gpu_flash_attention.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
