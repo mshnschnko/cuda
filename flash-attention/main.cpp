@@ -65,21 +65,21 @@ int main()
     auto cpu_end = std::chrono::high_resolution_clock::now();
     auto cpu_duration = std::chrono::duration_cast<std::chrono::milliseconds>(cpu_end - cpu_start);
 
-    std::cout << "Calculation time (CPU): " << (double)(cpu_duration.count()) / 1000.0 << "sec" << std::endl;
+    std::cout << "Calculation time (CPU): " << (double)(cpu_duration.count()) / 1000.0 << " sec" << std::endl;
 
     auto gpu_start = std::chrono::high_resolution_clock::now();
     gpu_attention(Q, K, V, output_gpu, n, d);
     auto gpu_end = std::chrono::high_resolution_clock::now();
     auto gpu_duration = std::chrono::duration_cast<std::chrono::milliseconds>(gpu_end - gpu_start);
 
-    std::cout << "Calculation time (GPU, simple): " << (double)(gpu_duration.count()) / 1000.0 << "sec" << std::endl;
+    std::cout << "Calculation time (GPU, simple): " << (double)(gpu_duration.count()) / 1000.0 << " sec" << std::endl;
 
     auto gpu_flash_start = std::chrono::high_resolution_clock::now();
     flash_attention(Q, K, V, output_gpu_flash, n, d);
     auto gpu_flash_end = std::chrono::high_resolution_clock::now();
     auto gpu_flash_duration = std::chrono::duration_cast<std::chrono::milliseconds>(gpu_flash_end - gpu_flash_start);
 
-    std::cout << "Calculation time (GPU, flash): " << (double)(gpu_flash_duration.count()) / 1000.0 << "sec" << std::endl;
+    std::cout << "Calculation time (GPU, flash): " << (double)(gpu_flash_duration.count()) / 1000.0 << " sec" << std::endl;
 
     //print_matrix(output_gpu, n, d);
 

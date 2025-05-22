@@ -38,16 +38,12 @@ __global__ void flash_attention_kernel(
 
     for (int tile = 0; tile < gridDim.x; ++tile) {
         if (row < n && threadIdx.x < TILE_SIZE && tile * TILE_SIZE + threadIdx.x < d) {
-            for (int i = 0; i < TILE_SIZE; i += BLOCK_SIZE) {
-                Qi[(threadIdx.y + i) * HEAD_DIM + threadIdx.x] = Q[row * d + (tile * TILE_SIZE + threadIdx.x)];
-            }
+            Qi[(threadIdx.y) * HEAD_DIM + threadIdx.x] = Q[row * d + (tile * TILE_SIZE + threadIdx.x)];
         }
 
         int load_col = tile * TILE_SIZE + threadIdx.y;
         if (load_col < n && threadIdx.x < TILE_SIZE) {
-            for (int i = 0; i < TILE_SIZE; i += BLOCK_SIZE) {
-                Kj[threadIdx.y * HEAD_DIM + threadIdx.x] = K[load_col * d + threadIdx.x];
-            }
+            Kj[threadIdx.y * HEAD_DIM + threadIdx.x] = K[load_col * d + threadIdx.x];
         }
 
         blk.sync();
@@ -69,9 +65,7 @@ __global__ void flash_attention_kernel(
         }
 
         if (load_col < n && threadIdx.x < TILE_SIZE) {
-            for (int i = 0; i < TILE_SIZE; i += BLOCK_SIZE) {
-                Vj[threadIdx.y * HEAD_DIM + threadIdx.x] = V[load_col * d + threadIdx.x];
-            }
+            Vj[threadIdx.y * HEAD_DIM + threadIdx.x] = V[load_col * d + threadIdx.x];
         }
 
         blk.sync();
