@@ -4,19 +4,6 @@
 #include <iostream>
 #include <math.h>
 
-__global__ void matrixMultiply2(float* A, float* B, float* C, int n, int d) {
-    int row = blockIdx.y * blockDim.y + threadIdx.y;
-    int col = blockIdx.x * blockDim.x + threadIdx.x;
-
-    if (row < n && col < n) {
-        float sum = 0.0f;
-        for (int k = 0; k < d; ++k) {
-            sum += A[row * d + k] * B[col * d + k];
-        }
-        C[row * n + col] = sum;
-    }
-}
-
 __global__ void matrixMultiply(
     const float* A,
     const float* B,
